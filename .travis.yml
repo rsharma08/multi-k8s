@@ -5,23 +5,23 @@ services:
 sudo: required
 
 before_install:
-  - docker build -t rsharma/fibby-test -f ./client/Dockerfile.dev ./client
+  - docker build -t rsharma/fib-test -f ./client/Dockerfile.dev ./client
 
 scripts:
-  - docker run rsharma/fibby-test yarn run test -- --coverage
+  - docker run rsharma/fib-test yarn run test -- --coverage
 
 after_success:
   # build production images
-  - docker build -t rsharma/fibby-client ./client
-  - docker build -t rsharma/fibby-nginx ./nginx
-  - docker build -t rsharma/fibby-server ./server
-  - docker build -t rsharma/fibby-worker ./worker
+  - docker build -t rsharma/fib-client ./client
+  - docker build -t rsharma/fib-nginx ./nginx
+  - docker build -t rsharma/fib-server ./server
+  - docker build -t rsharma/fib-worker ./worker
   # Login to Docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   # push production image??????????????????????????????????-client
-  - docker push rsharma/fibby-nginx
-  - docker push rsharma/fibby-server
-  - docker push rsharma/fibby-worker
+  - docker push rsharma/fib-nginx
+  - docker push rsharma/fib-server
+  - docker push rsharma/fib-worker
 
 
 
