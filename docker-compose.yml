@@ -1,0 +1,56 @@
+version: '3'
+services: 
+  postgres: 
+    image: postgres:latest
+    container_name: fibby_postgres
+  redis:
+    image: redis:latest
+    container_name: fibby_redis
+  nginx:
+    restart: always
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '5000:80'
+    container_name: fibby_nginx
+  api:
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes: 
+      - /app/node_modules
+      - ./server:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+    container_name: fibby_api
+  client: 
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes: 
+      - /app/node_modules
+      - ./client:/app
+    container_name: fibby_client
+  worker: 
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./worker
+    environment:
+        - REDIS_HOST=redis
+        - REDIS_PORT=6379
+    volumes: 
+      - /app/node_modules
+      - ./worker:/app
+    container_name: fibby_worker
+  
+  
+
+
+    
