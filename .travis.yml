@@ -22,6 +22,7 @@ after_success:
   - docker push rsharma/fib-nginx
   - docker push rsharma/fib-server
   - docker push rsharma/fib-worker
+  - docker push rsharma/fib-client
 
 
 
