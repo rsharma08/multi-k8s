@@ -18,11 +18,11 @@ after_success:
   - docker build -t rsharma/fib-worker ./worker
   # Login to Docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  # push production image??????????????????????????????????-client
+  # push production images to docker hub
+  - docker push rsharma/fib-client
   - docker push rsharma/fib-nginx
   - docker push rsharma/fib-server
   - docker push rsharma/fib-worker
-  - docker push rsharma/fib-client
 
 
 
