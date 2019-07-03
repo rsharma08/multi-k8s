@@ -1,12 +1,9 @@
 FROM node:alpine as builder
-
-ENV CI=true
 WORKDIR '/app'
-
 COPY ./package.json ./
-RUN yarn install
-COPY . . 
-RUN yarn run build
+RUN npm install
+COPY . .
+RUN npm run build
 
 FROM nginx
 EXPOSE 3000
